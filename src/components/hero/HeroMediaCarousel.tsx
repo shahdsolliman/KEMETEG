@@ -23,6 +23,8 @@ export default function HeroMediaCarousel() {
     const video = videoRef.current;
     if (!video) return;
 
+    video.muted = true;
+    video.defaultMuted = true;
     video.play().catch((error: unknown) => {
       if (error instanceof DOMException && error.name === 'AbortError') return;
       console.error('Failed to play hero carousel video:', error);
@@ -42,6 +44,7 @@ export default function HeroMediaCarousel() {
         src={slide}
         autoPlay
         muted
+        controls={false}
         loop
         playsInline
         preload="auto"
