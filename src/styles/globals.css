@@ -392,6 +392,12 @@
     display: block;
   }
 
+  .hero-background-video::-webkit-media-controls-start-playback-button,
+  .hero-background-video::-webkit-media-controls-overlay-play-button {
+    display: none !important;
+    -webkit-appearance: none;
+  }
+
   /* Links */
   a {
     color: inherit;

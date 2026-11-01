@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 const slides = [
   '/images/Hero/5.mp4',
@@ -11,6 +11,18 @@ export default function HeroMediaCarousel() {
   const [activeIndex, setActiveIndex] = useState(0);
   const videoRef = useRef<HTMLVideoElement>(null);
 
+  const startPlayback = useCallback(() => {
+    const video = videoRef.current;
+    if (!video || !video.paused) return;
+
+    video.muted = true;
+    video.defaultMuted = true;
+    video.play().catch((error: unknown) => {
+      if (error instanceof DOMException && error.name === 'AbortError') return;
+      console.error('Failed to play hero carousel video:', error);
+    });
+  }, []);
+
   useEffect(() => {
     const timer = window.setInterval(() => {
       setActiveIndex((index) => (index + 1) % slides.length);
@@ -20,16 +32,8 @@ export default function HeroMediaCarousel() {
   }, []);
 
   useEffect(() => {
-    const video = videoRef.current;
-    if (!video) return;
-
-    video.muted = true;
-    video.defaultMuted = true;
-    video.play().catch((error: unknown) => {
-      if (error instanceof DOMException && error.name === 'AbortError') return;
-      console.error('Failed to play hero carousel video:', error);
-    });
-  }, [activeIndex]);
+    startPlayback();
+  }, [activeIndex, startPlayback]);
 
   const slide = slides[activeIndex];
 
@@ -48,7 +52,8 @@ export default function HeroMediaCarousel() {
         loop
         playsInline
         preload="auto"
-        className="absolute inset-0 z-0 h-full w-full animate-fade-in object-cover"
+        onCanPlay={startPlayback}
+        className="hero-background-video absolute inset-0 z-0 h-full w-full animate-fade-in object-cover"
       />
     </div>
   );
