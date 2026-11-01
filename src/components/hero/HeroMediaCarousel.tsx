@@ -1,0 +1,52 @@
+'use client';
+
+import { useEffect, useRef, useState } from 'react';
+
+const slides = [
+  '/images/Hero/5.mp4',
+  '/images/Hero/6.mp4',
+] as const;
+
+export default function HeroMediaCarousel() {
+  const [activeIndex, setActiveIndex] = useState(0);
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    const timer = window.setInterval(() => {
+      setActiveIndex((index) => (index + 1) % slides.length);
+    }, 6500);
+
+    return () => window.clearInterval(timer);
+  }, []);
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    video.play().catch((error: unknown) => {
+      if (error instanceof DOMException && error.name === 'AbortError') return;
+      console.error('Failed to play hero carousel video:', error);
+    });
+  }, [activeIndex]);
+
+  const slide = slides[activeIndex];
+
+  return (
+    <div
+      className="pointer-events-none absolute inset-0 overflow-hidden"
+      aria-hidden="true"
+    >
+      <video
+        key={slide}
+        ref={videoRef}
+        src={slide}
+        autoPlay
+        muted
+        loop
+        playsInline
+        preload="auto"
+        className="absolute inset-0 z-0 h-full w-full animate-fade-in object-cover"
+      />
+    </div>
+  );
+}
