@@ -4,7 +4,7 @@ import '@/styles/globals.css';
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? 'https://kemet.eg'),
   title: {
-    default: 'KEMET | كيميت للمقاولات والتشطيبات',
+    default: 'KEMET للمقاولات والتشطيبات',
     template: '%s | KEMET',
   },
   description:
@@ -14,7 +14,7 @@ export const metadata: Metadata = {
     type: 'website',
     locale: 'ar_EG',
     alternateLocale: 'en_US',
-    siteName: 'KEMET | كيميت للمقاولات والتشطيبات',
+    siteName: 'KEMET للمقاولات والتشطيبات',
   },
   robots: {
     index: true,

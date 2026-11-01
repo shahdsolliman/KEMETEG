@@ -23,10 +23,6 @@ export async function generateMetadata({
   const { locale } = await params;
 
   return {
-    title: {
-      default: 'KEMET | كيميت للمقاولات والتشطيبات',
-      template: '%s | KEMET',
-    },
     alternates: {
       canonical: `/${locale}`,
       languages: {
