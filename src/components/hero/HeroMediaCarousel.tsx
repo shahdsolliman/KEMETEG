@@ -1,14 +1,16 @@
 'use client';
 
+import Image from 'next/image';
 import { useCallback, useEffect, useRef, useState } from 'react';
 
 const slides = [
-  '/images/Hero/5.mp4',
-  '/images/Hero/6.mp4',
+  { video: '/images/Hero/5.mp4', poster: '/images/Hero/5-poster.webp' },
+  { video: '/images/Hero/6.mp4', poster: '/images/Hero/6-poster.webp' },
 ] as const;
 
 export default function HeroMediaCarousel() {
   const [activeIndex, setActiveIndex] = useState(0);
+  const [playingVideo, setPlayingVideo] = useState<string | null>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
 
   const startPlayback = useCallback(() => {
@@ -17,6 +19,7 @@ export default function HeroMediaCarousel() {
 
     video.muted = true;
     video.defaultMuted = true;
+    video.setAttribute('webkit-playsinline', '');
     video.play().catch((error: unknown) => {
       if (error instanceof DOMException && error.name === 'AbortError') return;
       console.error('Failed to play hero carousel video:', error);
@@ -36,6 +39,7 @@ export default function HeroMediaCarousel() {
   }, [activeIndex, startPlayback]);
 
   const slide = slides[activeIndex];
+  const isPlaying = playingVideo === slide.video;
 
   return (
     <div
@@ -43,9 +47,10 @@ export default function HeroMediaCarousel() {
       aria-hidden="true"
     >
       <video
-        key={slide}
+        key={slide.video}
         ref={videoRef}
-        src={slide}
+        src={slide.video}
+        poster={slide.poster}
         autoPlay
         muted
         controls={false}
@@ -53,8 +58,27 @@ export default function HeroMediaCarousel() {
         playsInline
         preload="auto"
         onCanPlay={startPlayback}
-        className="hero-background-video absolute inset-0 z-0 h-full w-full animate-fade-in object-cover"
+        onPlaying={() => setPlayingVideo(slide.video)}
+        onPause={() =>
+          setPlayingVideo((current) =>
+            current === slide.video ? null : current
+          )
+        }
+        className={`hero-background-video absolute inset-0 z-0 h-full w-full object-cover transition-opacity duration-300 ${
+          isPlaying ? 'opacity-100' : 'opacity-0'
+        }`}
       />
+      {!isPlaying && (
+        <Image
+          src={slide.poster}
+          alt=""
+          fill
+          priority
+          sizes="100vw"
+          className="pointer-events-none absolute inset-0 z-[1] object-cover"
+          aria-hidden="true"
+        />
+      )}
     </div>
   );
 }

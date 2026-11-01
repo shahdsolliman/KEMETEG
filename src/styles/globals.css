@@ -393,7 +393,10 @@
   }
 
   .hero-background-video::-webkit-media-controls-start-playback-button,
-  .hero-background-video::-webkit-media-controls-overlay-play-button {
+  .hero-background-video::-webkit-media-controls-overlay-play-button,
+  .hero-background-video::-webkit-media-controls-play-button,
+  .hero-background-video::-webkit-media-controls,
+  .hero-background-video::-webkit-media-controls-enclosure {
     display: none !important;
     -webkit-appearance: none;
   }
