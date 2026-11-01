@@ -11,6 +11,7 @@ const slides = [
 export default function HeroMediaCarousel() {
   const [activeIndex, setActiveIndex] = useState(0);
   const [playingVideo, setPlayingVideo] = useState<string | null>(null);
+  const [blockedVideo, setBlockedVideo] = useState<string | null>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
 
   const startPlayback = useCallback(() => {
@@ -22,6 +23,7 @@ export default function HeroMediaCarousel() {
     video.setAttribute('webkit-playsinline', '');
     video.play().catch((error: unknown) => {
       if (error instanceof DOMException && error.name === 'AbortError') return;
+      setBlockedVideo(video.getAttribute('src'));
       console.error('Failed to play hero carousel video:', error);
     });
   }, []);
@@ -40,34 +42,43 @@ export default function HeroMediaCarousel() {
 
   const slide = slides[activeIndex];
   const isPlaying = playingVideo === slide.video;
+  const playbackBlocked = blockedVideo === slide.video;
 
   return (
     <div
       className="pointer-events-none absolute inset-0 overflow-hidden"
       aria-hidden="true"
     >
-      <video
-        key={slide.video}
-        ref={videoRef}
-        src={slide.video}
-        poster={slide.poster}
-        autoPlay
-        muted
-        controls={false}
-        loop
-        playsInline
-        preload="auto"
-        onCanPlay={startPlayback}
-        onPlaying={() => setPlayingVideo(slide.video)}
-        onPause={() =>
-          setPlayingVideo((current) =>
-            current === slide.video ? null : current
-          )
-        }
-        className={`hero-background-video absolute inset-0 z-0 h-full w-full object-cover transition-opacity duration-300 ${
-          isPlaying ? 'opacity-100' : 'opacity-0'
-        }`}
-      />
+      {!playbackBlocked && (
+        <video
+          key={slide.video}
+          ref={videoRef}
+          src={slide.video}
+          poster={slide.poster}
+          autoPlay
+          muted
+          controls={false}
+          loop
+          playsInline
+          webkit-playsinline=""
+          preload="auto"
+          onCanPlay={startPlayback}
+          onPlaying={() => {
+            setBlockedVideo((current) =>
+              current === slide.video ? null : current
+            );
+            setPlayingVideo(slide.video);
+          }}
+          onPause={() =>
+            setPlayingVideo((current) =>
+              current === slide.video ? null : current
+            )
+          }
+          className={`hero-background-video absolute inset-0 z-0 h-full w-full object-cover transition-opacity duration-300 ${
+            isPlaying ? 'opacity-100' : 'opacity-0'
+          }`}
+        />
+      )}
       {!isPlaying && (
         <Image
           src={slide.poster}
