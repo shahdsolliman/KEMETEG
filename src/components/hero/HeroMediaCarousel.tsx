@@ -74,22 +74,20 @@ export default function HeroMediaCarousel() {
               current === slide.video ? null : current
             )
           }
-          className={`hero-background-video absolute inset-0 z-0 h-full w-full object-cover transition-opacity duration-300 ${
+          className={`hero-background-video absolute inset-0 z-[1] h-full w-full object-cover transition-opacity duration-300 ${
             isPlaying ? 'opacity-100' : 'opacity-0'
           }`}
         />
       )}
-      {!isPlaying && (
-        <Image
-          src={slide.poster}
-          alt=""
-          fill
-          priority
-          sizes="100vw"
-          className="pointer-events-none absolute inset-0 z-[1] object-cover"
-          aria-hidden="true"
-        />
-      )}
+      <Image
+        src={slide.poster}
+        alt=""
+        fill
+        priority
+        sizes="100vw"
+        className="pointer-events-none absolute inset-0 z-0 object-cover"
+        aria-hidden="true"
+      />
     </div>
   );
 }

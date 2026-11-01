@@ -401,6 +401,12 @@
     -webkit-appearance: none;
   }
 
+  @supports (-webkit-touch-callout: none) {
+    .hero-background-video {
+      display: none !important;
+    }
+  }
+
   /* Links */
   a {
     color: inherit;
