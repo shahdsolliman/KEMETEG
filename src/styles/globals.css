@@ -455,19 +455,27 @@
   }
 
   .navbar-inverse-light {
-    background: rgb(240 241 234 / 0.94);
+    background: rgb(247 246 241 / 0.92);
     color: rgb(25 43 34);
     transition:
-      background-color 650ms var(--ease-premium),
-      color 650ms var(--ease-premium);
+      background-color 500ms var(--ease-premium),
+      border-color 500ms var(--ease-premium),
+      color 500ms var(--ease-premium),
+      box-shadow 500ms var(--ease-premium);
+  }
+
+  .navbar-inverse-light-scrolled {
+    background: rgb(247 246 241 / 0.98);
   }
 
   .navbar-inverse-dark {
     background: rgb(15 25 19 / 0.94);
     color: rgb(245 245 245);
     transition:
-      background-color 650ms var(--ease-premium),
-      color 650ms var(--ease-premium);
+      background-color 500ms var(--ease-premium),
+      border-color 500ms var(--ease-premium),
+      color 500ms var(--ease-premium),
+      box-shadow 500ms var(--ease-premium);
   }
 
   .navbar-logo-on-light {

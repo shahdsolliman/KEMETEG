@@ -89,9 +89,12 @@ export default function Navbar({ locale }: NavbarProps) {
       <header
         role="banner"
         className={cn(
-          'fixed inset-x-0 top-0 z-[100] w-full border-b backdrop-blur-xl transition-all duration-500',
+          'fixed inset-x-0 top-0 z-[100] w-full border-b backdrop-blur-xl transition-all duration-500 after:absolute after:inset-x-[8%] after:bottom-0 after:h-px after:bg-gradient-to-r after:from-transparent after:via-[#c5a267]/70 after:to-transparent after:content-[""]',
           lightNavbar
-            ? 'navbar-inverse-light border-black/10 text-[#192b22]'
+            ? cn(
+                'navbar-inverse-light border-black/10 text-[#192b22]',
+                scrolled && 'navbar-inverse-light-scrolled'
+              )
             : 'navbar-inverse-dark border-white/10 text-white',
           scrolled
             ? 'py-2.5 shadow-xl shadow-black/15 sm:py-3'
@@ -109,7 +112,7 @@ export default function Navbar({ locale }: NavbarProps) {
             aria-label="KEMET — Home"
           >
             <BrandLogo
-              size="clamp(42px, 4vw, 56px)"
+              size="clamp(48px, 4.5vw, 64px)"
               emblemSrc="/images/logo/KemetHORSE-transparent.png"
               locale={locale}
               className={lightNavbar ? 'navbar-logo-on-light' : 'navbar-logo-on-dark'}

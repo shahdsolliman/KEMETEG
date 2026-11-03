@@ -36,7 +36,7 @@ export const socialLinks: Array<{
   { platform: 'Instagram', href: '#', icon: 'Instagram' },
   { platform: 'Facebook', href: '#', icon: 'Facebook' },
   { platform: 'WhatsApp', href: '#', icon: 'MessageCircle' },
-  { platform: 'LinkedIn', href: '#', icon: 'Linkedin' },
+  { platform: 'LinkedIn', href: 'https://www.linkedin.com/company/kemetegconstruction', icon: 'Linkedin' },
 ];
 
 export const configuredSocialLinks = socialLinks.filter(({ href }) => href !== '#');

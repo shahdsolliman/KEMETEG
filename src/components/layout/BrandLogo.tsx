@@ -30,10 +30,11 @@ export default function BrandLogo({
     >
       {emblemSrc && (
         <span
-          className="h-[0.62em] w-[0.4em] shrink-0 bg-[rgb(var(--logo-text))]"
+          className="h-[0.78em] w-[0.52em] shrink-0 bg-[rgb(var(--logo-text))]"
           style={{
             maskImage: `url("${emblemSrc}")`,
             WebkitMaskImage: `url("${emblemSrc}")`,
+            transform: locale === 'en' ? 'scaleX(-1)' : undefined,
             maskPosition: 'center',
             WebkitMaskPosition: 'center',
             maskRepeat: 'no-repeat',

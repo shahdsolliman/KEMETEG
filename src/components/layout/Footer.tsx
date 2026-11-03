@@ -71,21 +71,22 @@ export default function Footer({ locale }: FooterProps) {
             <Link
               href={`/${locale}`}
               dir={locale === 'ar' ? 'rtl' : 'ltr'}
-              className="group mx-auto inline-flex items-center gap-2 transition-transform duration-300 hover:scale-[1.02] focus-visible:outline-gold"
+              className="group mx-auto inline-flex flex-col items-center gap-1.5 transition-transform duration-300 hover:scale-[1.02] focus-visible:outline-gold"
               aria-label="KEMET Home"
             >
               <Image
                 src="/images/logo/KemetHORSE-transparent.png"
                 alt=""
-                width={848}
-                height={1244}
-                sizes="(max-width: 640px) 36px, 44px"
+                width={1402}
+                height={1122}
+                sizes="(max-width: 640px) 144px, 176px"
                 loading="eager"
                 unoptimized
-                className="h-10 w-7 object-contain sm:h-12 sm:w-8"
+                className="h-24 w-32 object-contain brightness-0 invert sm:h-28 sm:w-36"
+                style={{ transform: locale === 'en' ? 'scaleX(-1)' : undefined }}
                 aria-hidden="true"
               />
-              <BrandLogo size={48} locale={locale} />
+              <BrandLogo size={112} layout="stacked" locale={locale} />
             </Link>
 
             <p className="mx-auto max-w-xs text-center text-sm leading-7 text-gray-muted sm:text-body-sm sm:leading-relaxed">
